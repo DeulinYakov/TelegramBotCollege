@@ -128,7 +128,6 @@ def function_ya(message):
             hn.back_group(message, MEMORY)
             hn.back_func_day(message, bot, keyboard=data_keyboard())
         else:
-            # пользователь пишет парашу, шлем его
             pass
     except:
         send_message_to_user(message, f'Упс😓... Что-то пошло не так, давайте попробуем заново', startup_keyboard())
