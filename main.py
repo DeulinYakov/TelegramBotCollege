@@ -3,7 +3,7 @@ import telebot
 from telebot import *
 from telebot.types import ReplyKeyboardMarkup
 from telebot.types import InputMediaPhoto
-#import html5lib
+
 import sets
 import funcs as fn
 import handlers as hn
@@ -13,16 +13,16 @@ from time import sleep
 my_chat_ID = 722555232
 # Типо он ассинхроный
 MEMORY = {}
-# Фаил расписания формата html /home/pip/Desktop/bot
-DATA_FILE_PATH = '/home/pip/Desktop/bot/Лист1.html'
+# Фаил расписания формата html
+DATA_FILE_PATH = 'Лист1.html'
 # Фаил звонков понедельник
-Mcalls = '/home/pip/Desktop/bot/Понедельник.jpg'
+Mcalls = 'Понедельник.png'
 # Фаил звонков вторник - пятница
-Bcalls = '/home/pip/Desktop/bot/Вторник - Пятница.jpg'
+Bcalls = 'Вторник - Пятница.jpg'
 # Фаил звонков суббота
-Scalls = '/home/pip/Desktop/bot/Суббота.jpg'
+Scalls = 'Суббота.jpg'
 # Токен бота
-bot = telebot.TeleBot('TOKEN')
+bot = telebot.TeleBot('5417938318:AAF0JKX986ivMAEGAijoCcOvHdyZzmTerrw')
 
 
 # Токен тестового бота
@@ -64,10 +64,10 @@ def schedule_keyboard():
 
 
 def data_keyboard():
-    """Функция создающая клавиатуру расписания для выбора даты sets.mon,"""
+    """Функция создающая клавиатуру расписания для выбора даты sets.fri, """
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     markup.add(sets.back)
-    markup.add(sets.tue, sets.wed)
+    markup.add(sets.mon, sets.tue, sets.wed)
     markup.add(sets.thu, sets.fri, sets.sat)
     markup.add(sets.menu)
     return markup
@@ -128,6 +128,7 @@ def function_ya(message):
             hn.back_group(message, MEMORY)
             hn.back_func_day(message, bot, keyboard=data_keyboard())
         else:
+            # пользователь пишет парашу, шлем его
             pass
     except:
         send_message_to_user(message, f'Упс😓... Что-то пошло не так, давайте попробуем заново', startup_keyboard())

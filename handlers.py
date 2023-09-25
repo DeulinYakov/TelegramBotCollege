@@ -1,4 +1,6 @@
 from telebot.types import InputMediaPhoto
+edge = 'BV'
+edgeNum = 51.0
 
 
 def secondary_functions(message, bot, keyboard):
@@ -58,7 +60,7 @@ def get_schedule_handler(message, bot, file_path, user_data, dict, keyboard):
         data = data.drop([1.0, 2.0, 3.0, 4.0])
         # удаляем посдедние ненужные столбцы после столбца BI
         all_colums = list(data.columns.values)
-        last_index = all_colums.index("AX")
+        last_index = all_colums.index(edge)
         bad_colums = all_colums[last_index + 1:]
         data = data.drop(bad_colums, axis=1)
 
@@ -72,10 +74,10 @@ def get_schedule_handler(message, bot, file_path, user_data, dict, keyboard):
 
         # вернем отфильтрованный датафрейм
 
-        return ds.get(columns_names).loc[7.0:42.0]
+        return ds.get(columns_names).loc[7.0:edgeNum]
 
     first_processing(data)
-    example_grop = get_schedule(data, user_data[1], 6.0)
+    example_grop = get_schedule(data, user_data[1], 5.0)
     result = example_grop.values.tolist()
 
     # сделаем функцию которая достанет расписание нужного дня
@@ -115,7 +117,7 @@ def get_mon_schedule_handler(message, bot, file_path, user_data, dict, keyboard)
         data = data.drop([1.0, 2.0, 3.0, 4.0])
         # удаляем посдедние ненужные столбцы после столбца BI
         all_colums = list(data.columns.values)
-        last_index = all_colums.index("AX")
+        last_index = all_colums.index(edge)
         bad_colums = all_colums[last_index + 1:]
         data = data.drop(bad_colums, axis=1)
 
@@ -129,10 +131,10 @@ def get_mon_schedule_handler(message, bot, file_path, user_data, dict, keyboard)
 
         # вернем отфильтрованный датафрейм
 
-        return ds.get(columns_names).loc[8.0:42.0]
+        return ds.get(columns_names).loc[8.0:edgeNum]
 
     first_processing(data)
-    example_grop = get_schedule(data, user_data[1], 6.0)
+    example_grop = get_schedule(data, user_data[1], 5.0)
     result = example_grop.values.tolist()
 
     # сделаем функцию которая достанет расписание нужного дня
@@ -164,8 +166,8 @@ def calls_handler(message, bot, Mcalls, Bcalls, Scalls, keyboard):
     pic1 = open(Mcalls, "rb")
     pic2 = open(Bcalls, "rb")
     pic3 = open(Scalls, "rb")
-    media = [InputMediaPhoto(pic1, caption='Пожалуйста, Вы можете закрепить это сообщение, для Вашего удобства. '
-                                           'Удачного дня😊'), InputMediaPhoto(pic2), InputMediaPhoto(pic3)]
+    media = [InputMediaPhoto(pic1, caption='Пожалуйста, Вы можете закрепить это сообщение, для Вашего удобства.'
+                                           ' Удачного дня😊'), InputMediaPhoto(pic2), InputMediaPhoto(pic3)]
     sleep(1)
     bot.send_media_group(message.chat.id, media)
 
