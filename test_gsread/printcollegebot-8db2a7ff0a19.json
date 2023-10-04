@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "printcollegebot",
+  "private_key_id": "8db2a7ff0a19bb1e57832b4c8786e1e02082c636",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC4GA1bnY1ZzzPw\nxPrn0Oe5VBSx+XQwhmzZLyKwirNfOjU3UZbLB7RXf4j6wdHNUMzfyDbkSb0vKss4\nRvz9RchTsRyCvdIpTapStUmWUdYqmS57jk23TciXE/6ohXbnIJcsKEjzcXGRNvNJ\nYAC3mlLwGnt7DFnVvembrOMzjzvs78Y9SUZo3oNVCEnShZRVsVy3+gptlxcmfhdb\nXSylG9ijGIuItUQV3Ldrtx/n0spOzvAnZSGErGdAsYgVnBVOx03wcfFPTnoFAy9Q\njgw/eqAoxJuipNv3waPH5pmgsSh3e+RB3KQBf6AAxJcLyAQSpv73gOTMnsaNRIZ4\nwC+YfdsTAgMBAAECggEABIuiJ3fG6dzvW+EJOZhouE87/umkCvSuva1nw7MmWvy9\ncU25lZltmawjo4ljQZiz+Pc2amxAWGihQZT4dyp2F/brYiEHY49a3BWaKQor6buu\n2vcjB8UgZaE6lvT2AB6dDPE7so3Dr5cLP8MNPCX6fpowyqjTPln6PtFF1NvoWgvG\nIYxd3zoD/rgn5omzsy8ELbfY84D+bKkXlMaGjJZdG4EslNARlDrSU4WB6bdAOcTY\nUnSflVbYDhgDk57DrKhu1cVDUT5UbqfUWJ+0hexRLGicQ/xGuf0IRAbGXpu/VT/X\ndGAU5aa5iAqlewgtpIQL9x6VQviOZkMoeB88KPAI7QKBgQDs5uLZzD/QLN0hWwkn\nBqhBsOQPC66jwO0NYc0TaoLvIwErpir6glCslK9WH5PZTqnfZfTeYkNOhZOhTcdl\nbNVOQGN5MoQDHuZP6A3Fidxcp4UfXHJ2JUnGlwmgbRYIqtgFU2OpC1PE/9VxSM6G\nER+SCK+Uc/L9z6AlUwIt6EWYPwKBgQDG71SqUqauMGXOaw0DkVCpbTqGz1CIppXu\ncSXkefjAtGLFeutczbqf3cfHX7M0O+iDAqCI2v44aGsGc+3LeZ6MI/OdBpD7edVq\nxEcJM1zbh4E+iIEEkGdRYdjgaI8waUlzlRTtFPmzzlwleEA8ARqBV1s1DDVWH+Cl\nE/b303foLQKBgQCpCbp2pDooZcrHoTivox1t+jVQ0wojCGdddBqrrwWMcxLDvYbP\nRysfadyOfGu31Fx77jlCcSULo16K63/KzFSLyH/yG+x8eZDnFXK2MD+P0Wy4yvNV\ngBfbXyxcT1o4hwcrDayAE3gLim0Xr1bF7PP09MOsDuwk1QC1gTx9203FawKBgAzr\nPfRRqcFmIzZkfVPd+/8EuOhITlKRfusdLfjIcv8Qt9lbQi2krpnzLSYlcN3ThiX7\n5bD9h8TiAxFINgkgvMsdCpUH+CJcpx9n37UZQM6A3kPRWY+SUSNX1127bJEYRUzc\nQZ+j3RNwM0u7o3BCIhaENcgcItqU92HBCijN8tuBAoGBAIITXcTNJpER9pmLD87p\nfJ7Sk+dm2Zv3SplonVSu4kuFgH/4vW9VQv99NReXaJoSWLHY0rSkotqsFEO8YR9M\nGaLO1VG3cVPeRtpwMmtbIc++Zf8YYTzjaJ3cxcjON0CDRxMj1xx+hqbarfG0hfNW\n+AaRTJ1o/hBz/l7gomRVr/x1\n-----END PRIVATE KEY-----\n",
+  "client_email": "printbot@printcollegebot.iam.gserviceaccount.com",
+  "client_id": "113743460316268775503",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/printbot%40printcollegebot.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
