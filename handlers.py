@@ -1,5 +1,5 @@
 from telebot.types import InputMediaPhoto
-edge = 'Unnamed: 75'
+edge = 'BT'
 edgeNum = 51.0
 
 
@@ -49,9 +49,8 @@ def get_schedule_handler(message, bot, file_path, user_data, dict, keyboard):
     global otvet
     import pandas as pd
     from time import sleep
-    data = pd.read_html('https://docs.google.com/spreadsheets/d/e/2PACX-1vRRnOsDR9Nf96i_0MumrsVVTFyIdzpBkQRQdUaSQ7ZsSH9tNIRSxUqAEyR7pgQLvQ/pubhtml?gid=658407717&single=true', encoding='utf-8', header=0, index_col=0)[0].fillna('Нет')
 
-#    data = pd.read_html(file_path, header=0, index_col=0)[0].fillna('нет')
+    data = pd.read_html(file_path, header=0, index_col=0)[0].fillna('нет')
 
     def first_processing(data):
         """Функция первичной обработки файла с расписанием"""
@@ -71,7 +70,7 @@ def get_schedule_handler(message, bot, file_path, user_data, dict, keyboard):
         indx = ds.loc[found_line_name].tolist().index(grop_name)
 
         # найдем названия столбцов по найденному индексу
-        columns_names = ["Unnamed: 1", "Unnamed: 3", "Unnamed: 4", ds.columns[indx], ds.columns[indx + 1]]
+        columns_names = ["A", "B", "C", ds.columns[indx], ds.columns[indx + 1]]
 
         # вернем отфильтрованный датафрейм
 
@@ -84,7 +83,7 @@ def get_schedule_handler(message, bot, file_path, user_data, dict, keyboard):
     # сделаем функцию которая достанет расписание нужного дня
     def get_xz(ds, day_name):
         # найдем индекс нужного дня
-        indx = example_grop["Unnamed: 1"].to_list().index(day_name)
+        indx = example_grop["A"].to_list().index(day_name)
 
         # получим адреса нужных ячеек
         start = ds.index.to_list()[indx]

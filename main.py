@@ -22,11 +22,11 @@ Bcalls = 'Вторник - Пятница.jpg'
 # Фаил звонков суббота
 Scalls = 'Суббота.jpg'
 # Токен бота
-#bot = telebot.TeleBot('5417938318:AAF0JKX986ivMAEGAijoCcOvHdyZzmTerrw')
+bot = telebot.TeleBot('')
 
 
 # Токен тестового бота
-bot = telebot.TeleBot('755635624:AAH5Af2ZNRtDf2wKOm5bF1mWXLzIl4slRx8')
+#bot = telebot.TeleBot('')
 
 
 # Функции
@@ -93,45 +93,45 @@ def send_welcome(message):
 # Обработчик сообщений
 @bot.message_handler(content_types=['text'])
 def function_ya(message):
-    #try:
-    if message.text in sets.main_functions:
-        # запуск обработчика основынх функций бота
-        hn.main_func_handler(message, MEMORY, bot, keyboard=schedule_keyboard())
-    elif message.text in sets.Ya:
-        # запуск обработчика второстепенных функций
-        hn.secondary_functions(message, bot, keyboard=startup_keyboard())
-    elif message.text in sets.areas and MEMORY[message.chat.id][0] == sets.schedule:
-        # обработчик групп
-        hn.group_handler(message, MEMORY, bot, keyboard=data_keyboard())
-    elif message.text in sets.days and MEMORY[message.chat.id][1] in sets.areas:
-        # обработчик дней вторник - суббота и обработчик выдачи результата
-        hn.day_handler(message, MEMORY, bot, keyboard=back_day_keyboard())
-        hn.get_schedule_handler(message, bot, DATA_FILE_PATH, MEMORY[message.chat.id], MEMORY,
-                                keyboard=back_day_keyboard())
-    elif message.text in sets.mon and MEMORY[message.chat.id][1] in sets.areas:
-        # обработчик понедельника и обработчик выдачи результата
-        hn.day_handler(message, MEMORY, bot, keyboard=back_day_keyboard())
-        hn.get_mon_schedule_handler(message, bot, DATA_FILE_PATH, MEMORY[message.chat.id], MEMORY,
+    try:
+        if message.text in sets.main_functions:
+            # запуск обработчика основынх функций бота
+            hn.main_func_handler(message, MEMORY, bot, keyboard=schedule_keyboard())
+        elif message.text in sets.Ya:
+            # запуск обработчика второстепенных функций
+            hn.secondary_functions(message, bot, keyboard=startup_keyboard())
+        elif message.text in sets.areas and MEMORY[message.chat.id][0] == sets.schedule:
+            # обработчик групп
+            hn.group_handler(message, MEMORY, bot, keyboard=data_keyboard())
+        elif message.text in sets.days and MEMORY[message.chat.id][1] in sets.areas:
+            # обработчик дней вторник - суббота и обработчик выдачи результата
+            hn.day_handler(message, MEMORY, bot, keyboard=back_day_keyboard())
+            hn.get_schedule_handler(message, bot, DATA_FILE_PATH, MEMORY[message.chat.id], MEMORY,
                                     keyboard=back_day_keyboard())
-    elif message.text in sets.calls:
-        # обработчик второстепенной функции звонков
-        hn.calls_handler(message, bot, Mcalls, Bcalls, Scalls, keyboard=startup_keyboard())
-    elif message.text in sets.menu:
-        # Функция меню
-        hn.start_handler(message, MEMORY, bot, keyboard=add_startup_keyboard())
-    elif message.text in sets.back and MEMORY[message.chat.id][0] == sets.schedule:
-        # Замена группы
-        hn.back_group(message, MEMORY)
-        hn.back_func_handler(message, bot, keyboard=schedule_keyboard())
-    elif message.text in sets.back_day and MEMORY[message.chat.id][1] in sets.areas:
-        # Замена дня
-        hn.back_group(message, MEMORY)
-        hn.back_func_day(message, bot, keyboard=data_keyboard())
-    else:
-        # пользователь пишет парашу, шлем его
-        pass
-    #except:
-     #   send_message_to_user(message, f'Упс😓... Что-то пошло не так, давайте попробуем заново', startup_keyboard())
+        elif message.text in sets.mon and MEMORY[message.chat.id][1] in sets.areas:
+            # обработчик понедельника и обработчик выдачи результата
+            hn.day_handler(message, MEMORY, bot, keyboard=back_day_keyboard())
+            hn.get_mon_schedule_handler(message, bot, DATA_FILE_PATH, MEMORY[message.chat.id], MEMORY,
+                                        keyboard=back_day_keyboard())
+        elif message.text in sets.calls:
+            # обработчик второстепенной функции звонков
+            hn.calls_handler(message, bot, Mcalls, Bcalls, Scalls, keyboard=startup_keyboard())
+        elif message.text in sets.menu:
+            # Функция меню
+            hn.start_handler(message, MEMORY, bot, keyboard=add_startup_keyboard())
+        elif message.text in sets.back and MEMORY[message.chat.id][0] == sets.schedule:
+            # Замена группы
+            hn.back_group(message, MEMORY)
+            hn.back_func_handler(message, bot, keyboard=schedule_keyboard())
+        elif message.text in sets.back_day and MEMORY[message.chat.id][1] in sets.areas:
+            # Замена дня
+            hn.back_group(message, MEMORY)
+            hn.back_func_day(message, bot, keyboard=data_keyboard())
+        else:
+            # пользователь пишет парашу, шлем его
+            pass
+    except:
+        send_message_to_user(message, f'Упс😓... Что-то пошло не так, давайте попробуем заново', startup_keyboard())
 
 
 bot.infinity_polling()
