@@ -50,7 +50,7 @@ def get_schedule_handler(message, bot, file_path, user_data, dict, keyboard):
     import pandas as pd
     from time import sleep
 
-    data = pd.read_html(file_path, header=0, index_col=0)[0].fillna('нет')
+    data = pd.read_html(file_path, encoding='utf-8', header=0, index_col=0)[0].fillna('нет')
 
     def first_processing(data):
         """Функция первичной обработки файла с расписанием"""
@@ -107,7 +107,7 @@ def get_mon_schedule_handler(message, bot, file_path, user_data, dict, keyboard)
     global otvet
     import pandas as pd
     from time import sleep
-    data = pd.read_html(file_path, header=0, index_col=0)[0].fillna('нет')
+    data = pd.read_html(file_path, encoding='utf-8', header=0, index_col=0)[0].fillna('нет')
 
     def first_processing(data):
         """Функция первичной обработки файла с расписанием"""
