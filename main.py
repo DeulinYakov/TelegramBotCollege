@@ -7,6 +7,7 @@ from telebot.types import InputMediaPhoto
 import sets
 import funcs as fn
 import handlers as hn
+import key as k
 from time import sleep
 
 
@@ -22,11 +23,11 @@ Bcalls = 'Вторник - Пятница.jpg'
 # Фаил звонков суббота
 Scalls = 'Суббота.jpg'
 # Токен бота
-# bot = telebot.TeleBot('')
+# bot = telebot.TeleBot(k.TOKEN)
 
 
 # Токен тестового бота
-bot = telebot.TeleBot('')
+bot = telebot.TeleBot(k.TEST_TOKEN)
 
 
 # Функции
