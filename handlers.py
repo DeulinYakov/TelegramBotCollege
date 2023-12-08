@@ -6,10 +6,11 @@ import sqlite3
 
 """База данных"""
 # Подключение к базе данных 'dbase.db', если её нет она создастся автоматически
-db = sqlite3.connect('base.db')
+conn = sqlite3.connect('base.db', check_same_thread=False)
 # Создаём курсор
-cur = db.cursor()
-# cur.execute('''CREATE TABLE users (id INTEGER, nickname TEXT, droup TEXT, day TEXT, nofr INTEGER)''')
+cur = conn.cursor()
+print("Подключен к SQLite")
+cur.execute('''CREATE TABLE users (id TEXT, nickname TEXT, droup TEXT, day TEXT, nofr INTEGER)''')
 # id = message.chat.id
 # nickname = ник в тг
 # grop = группа
@@ -34,10 +35,21 @@ def secondary_functions(message, bot, keyboard):
 def main_func_handler(message, dict, bot, keyboard):
     """Обработчик главных функций. Пока обработаывает только функцию
     расписание."""
+    info_user_to = cur.execute("SELECT * FROM users WHERE id = " +
+                               str(message.chat.id)).fetchall()
+
+    if len(info_user_to) > 0:
+        print('t')# если есть
+    else:
+        count = cur.execute("""INSERT INTO users
+                          (id, nickname, droup, day, nofr)
+                          VALUES
+                          (?, ?, '', '', 0);""", (message.chat.id, message.from_user.username))
+        conn.commit()
     # запишем состояние общения с пользователем
-    if dict.get(message.chat.id, None) is None:
-        dict[message.chat.id] = []
-    dict[message.chat.id].append(message.text)
+    # if dict.get(message.chat.id, None) is None:
+    #   dict[message.chat.id] = []
+    # dict[message.chat.id].append(message.text)
     # отпрвим пользователю следующее собщение
     msg = bot.send_message(message.chat.id,
                            'Выберите интересующее направление',
@@ -182,7 +194,8 @@ def get_mon_schedule_handler(message, bot, file_path, user_data, dict, keyboard)
 def calls_handler(message, bot, Mcalls, Bcalls, Scalls, keyboard):
     from time import sleep
     """Функция выдающая расписание звонков"""
-    msg = bot.send_message(message.chat.id, 'Вспоминаю расписание звонков, это может занять несколько секунд🤔', reply_markup=keyboard)
+    msg = bot.send_message(message.chat.id, 'Вспоминаю расписание звонков, это может занять несколько секунд🤔',
+                           reply_markup=keyboard)
     pic1 = open(Mcalls, "rb")
     pic2 = open(Bcalls, "rb")
     pic3 = open(Scalls, "rb")
