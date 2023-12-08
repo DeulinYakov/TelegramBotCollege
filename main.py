@@ -11,7 +11,6 @@ import funcs as fn
 import handlers as hn
 import key as k
 
-
 """Важные переменные"""
 # Мой чат айди
 my_chat_ID = 722555232
@@ -96,14 +95,14 @@ def send_welcome(message):
 # Обработчик сообщений
 @bot.message_handler(content_types=['text'])
 def function_ya(message):
-    #try:
+    # try:
     if message.text in sets.main_functions:
         # запуск обработчика основынх функций бота
         hn.main_func_handler(message, MEMORY, bot, keyboard=schedule_keyboard())
     elif message.text in sets.Ya:
         # запуск обработчика второстепенных функций
         hn.secondary_functions(message, bot, keyboard=startup_keyboard())
-    elif message.text in sets.areas and MEMORY[message.chat.id][0] == sets.schedule:
+    elif message.text in sets.areas:  # and MEMORY[message.chat.id][0] == sets.schedule:
         # обработчик групп
         hn.group_handler(message, MEMORY, bot, keyboard=data_keyboard())
     elif message.text in sets.days and MEMORY[message.chat.id][1] in sets.areas:
@@ -133,9 +132,8 @@ def function_ya(message):
     else:
         # пользователь пишет парашу, шлем его
         pass
-    #except:
-      #  send_message_to_user(message, f'Упс😓... Что-то пошло не так, давайте попробуем заново', startup_keyboard())
+    # except:
+    #  send_message_to_user(message, f'Упс😓... Что-то пошло не так, давайте попробуем заново', startup_keyboard())
 
 
 bot.infinity_polling()
-

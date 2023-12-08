@@ -10,7 +10,7 @@ conn = sqlite3.connect('base.db', check_same_thread=False)
 # Создаём курсор
 cur = conn.cursor()
 print("Подключен к SQLite")
-cur.execute('''CREATE TABLE users (id TEXT, nickname TEXT, droup TEXT, day TEXT, nofr INTEGER)''')
+# cur.execute('''CREATE TABLE users (id TEXT, nickname TEXT, droup TEXT, day TEXT, nofr INTEGER)''')
 # id = message.chat.id
 # nickname = ник в тг
 # grop = группа
@@ -35,6 +35,7 @@ def secondary_functions(message, bot, keyboard):
 def main_func_handler(message, dict, bot, keyboard):
     """Обработчик главных функций. Пока обработаывает только функцию
     расписание."""
+    # Смотрим есть ли пользователь, сильно поможет при полном переходе на 2.1
     info_user_to = cur.execute("SELECT * FROM users WHERE id = " +
                                str(message.chat.id)).fetchall()
 
@@ -46,10 +47,7 @@ def main_func_handler(message, dict, bot, keyboard):
                           VALUES
                           (?, ?, '', '', 0);""", (message.chat.id, message.from_user.username))
         conn.commit()
-    # запишем состояние общения с пользователем
-    # if dict.get(message.chat.id, None) is None:
-    #   dict[message.chat.id] = []
-    # dict[message.chat.id].append(message.text)
+        conn.close()
     # отпрвим пользователю следующее собщение
     msg = bot.send_message(message.chat.id,
                            'Выберите интересующее направление',
@@ -58,8 +56,10 @@ def main_func_handler(message, dict, bot, keyboard):
 
 def group_handler(message, dict, bot, keyboard):
     """Обработчки групп"""
-    # закинем инфу о группе в словарик
-    dict[message.chat.id].append(message.text)
+
+    # закинем инфу о группе в базу
+
+    # dict[message.chat.id].append(message.text)
     # отпрвим пользователю следующее собщение
     msg = bot.send_message(message.chat.id,
                            'Выберите день недели',
