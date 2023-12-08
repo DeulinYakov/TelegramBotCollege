@@ -1,16 +1,19 @@
-# Библиотеки
+"""Импорты"""
+# Библиотеки для работы с ботом
 import telebot
 from telebot import *
 from telebot.types import ReplyKeyboardMarkup
 from telebot.types import InputMediaPhoto
 
+# Подключаем локальные модули
 import sets
 import funcs as fn
 import handlers as hn
 import key as k
-from time import sleep
 
 
+"""Важные переменные"""
+# Мой чат айди
 my_chat_ID = 722555232
 # Типо он ассинхроный
 MEMORY = {}
@@ -24,7 +27,6 @@ Bcalls = 'Вторник - Пятница.jpg'
 Scalls = 'Суббота.jpg'
 # Токен бота
 # bot = telebot.TeleBot(k.TOKEN)
-
 
 # Токен тестового бота
 bot = telebot.TeleBot(k.TEST_TOKEN)
@@ -136,3 +138,4 @@ def function_ya(message):
 
 
 bot.infinity_polling()
+

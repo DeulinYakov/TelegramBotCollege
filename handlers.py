@@ -1,4 +1,24 @@
+# Импорт работы с фото
 from telebot.types import InputMediaPhoto
+
+# Подключаем MySQLite
+import sqlite3
+
+"""База данных"""
+# Подключение к базе данных 'dbase.db', если её нет она создастся автоматически
+db = sqlite3.connect('base.db')
+# Создаём курсор
+cur = db.cursor()
+# cur.execute('''CREATE TABLE users (id INTEGER, nickname TEXT, droup TEXT, day TEXT, nofr INTEGER)''')
+# id = message.chat.id
+# nickname = ник в тг
+# grop = группа
+# day = день
+# nofr = кол-во обращений
+
+# cur.close()
+# print('////base close////')
+
 edge = 'BT'
 edgeNum = 51.0
 
