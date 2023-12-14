@@ -6,7 +6,10 @@ from telebot.types import ReplyKeyboardMarkup
 from telebot.types import InputMediaPhoto
 
 # Подключаем локальные модули
+# асеты
 import sets
+import new_sets as ns
+
 import funcs as fn
 import handlers as hn
 import key as k
@@ -17,7 +20,7 @@ my_chat_ID = 722555232
 # Типо он ассинхроный
 MEMORY = {}
 # Фаил расписания формата html
-DATA_FILE_PATH = 'https://docs.google.com/spreadsheets/d/1XGtzBWYwyxyUa9ixdL0ehdzKt7SrKPLaA8Rl1UhT8Zc/edit#gid=1851053441/export?gid=13.11-18.11&format=html'
+DATA_FILE_PATH = 'Лист1.html'
 # Фаил звонков понедельник
 Mcalls = 'Понедельник.png'
 # Фаил звонков вторник - пятница
@@ -31,29 +34,8 @@ Scalls = 'Суббота.jpg'
 bot = telebot.TeleBot(k.TEST_TOKEN)
 
 
-# Функции
 def add_startup_keyboard():
-    """Функция создающая начальную клавиатуру для выбора функций бота"""
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-    markup.add(sets.schedule)
-    markup.add(sets.calls)
-    markup.add(sets.Ya)
-    return markup
-
-
-def startup_keyboard():
-    """Функция создающая начальную клавиатуру для выбора функций бота"""
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-    markup.add(sets.menu)
-    return markup
-
-
-def back_day_keyboard():
-    """Функция создающая начальную клавиатуру для выбора функций бота"""
-    markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-    markup.add(sets.back_day)
-    markup.add(sets.menu)
-    return markup
+    """Функция создающая начальную клавиатуру для регистрации пользователя в системе"""
 
 
 def schedule_keyboard():
@@ -65,8 +47,15 @@ def schedule_keyboard():
     return markup
 
 
+def send_message_to_user(message, text, keyboard=None):
+    """Эта функцию отправит пользователю сообщение"""
+    # Отправим сообщение пользователю и добавим нужную клавиатуру
+    msg = bot.send_message(message.chat.id, text, reply_markup=keyboard)
+
+
+# Переделать
 def data_keyboard():
-    """Функция создающая клавиатуру расписания для выбора даты sets.fri, """
+    """Функция создающая клавиатуру расписания для выбора даты """
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     markup.add(sets.back)
     markup.add(sets.mon, sets.tue, sets.wed)
@@ -75,14 +64,8 @@ def data_keyboard():
     return markup
 
 
-def send_message_to_user(message, text, keyboard=None):
-    """Эта функцию отправит пользователю сообщение"""
-    # Отправим сообщение пользователю и добавим нужную клавиатуру
-    msg = bot.send_message(message.chat.id, text, reply_markup=keyboard)
-
-
 # Отправляю себе сообщение при каждом запуске
-msg = bot.send_message(my_chat_ID, f'Босс, я перезагрузился.\nНачал работу')
+msg = bot.send_message(my_chat_ID, f'Ас-саляму алейкум Босс!\nНачал работу')
 
 
 # Обработчик команд
@@ -95,45 +78,13 @@ def send_welcome(message):
 # Обработчик сообщений
 @bot.message_handler(content_types=['text'])
 def function_ya(message):
-    # try:
-    if message.text in sets.main_functions:
-        # запуск обработчика основынх функций бота
-        hn.main_func_handler(message, MEMORY, bot, keyboard=schedule_keyboard())
-    elif message.text in sets.Ya:
-        # запуск обработчика второстепенных функций
-        hn.secondary_functions(message, bot, keyboard=startup_keyboard())
-    elif message.text in sets.areas:  # and MEMORY[message.chat.id][0] == sets.schedule:
-        # обработчик групп
-        hn.group_handler(message, MEMORY, bot, keyboard=data_keyboard())
-    elif message.text in sets.days and MEMORY[message.chat.id][1] in sets.areas:
-        # обработчик дней вторник - суббота и обработчик выдачи результата
-        hn.day_handler(message, MEMORY, bot, keyboard=back_day_keyboard())
-        hn.get_schedule_handler(message, bot, DATA_FILE_PATH, MEMORY[message.chat.id], MEMORY,
-                                keyboard=back_day_keyboard())
-    elif message.text in sets.mon and MEMORY[message.chat.id][1] in sets.areas:
-        # обработчик понедельника и обработчик выдачи результата
-        hn.day_handler(message, MEMORY, bot, keyboard=back_day_keyboard())
-        hn.get_mon_schedule_handler(message, bot, DATA_FILE_PATH, MEMORY[message.chat.id], MEMORY,
-                                    keyboard=back_day_keyboard())
-    elif message.text in sets.calls:
-        # обработчик второстепенной функции звонков
-        hn.calls_handler(message, bot, Mcalls, Bcalls, Scalls, keyboard=startup_keyboard())
-    elif message.text in sets.menu:
-        # Функция меню
-        hn.start_handler(message, MEMORY, bot, keyboard=add_startup_keyboard())
-    elif message.text in sets.back and MEMORY[message.chat.id][0] == sets.schedule:
-        # Замена группы
-        hn.back_group(message, MEMORY)
-        hn.back_func_handler(message, bot, keyboard=schedule_keyboard())
-    elif message.text in sets.back_day and MEMORY[message.chat.id][1] in sets.areas:
-        # Замена дня
-        hn.back_group(message, MEMORY)
-        hn.back_func_day(message, bot, keyboard=data_keyboard())
+    # Прописать try для защиты от ошибок
+    if hn.init_user_verif_func(message):
+        print(message.text)
     else:
-        # пользователь пишет парашу, шлем его
-        pass
-    # except:
-    #  send_message_to_user(message, f'Упс😓... Что-то пошло не так, давайте попробуем заново', startup_keyboard())
+        print('НЕТ')
+
+
 
 
 bot.infinity_polling()
