@@ -6,17 +6,11 @@ from telebot.types import ReplyKeyboardMarkup
 from telebot.types import InputMediaPhoto
 
 # Подключаем локальные модули
-# асеты
 import sets
-import new_sets as ns
-
 import funcs as fn
 import handlers as hn
 import check as ch
 import key as k
-
-# Временно
-import tests
 
 """Важные переменные"""
 # Мой чат айди
@@ -74,7 +68,11 @@ msg = bot.send_message(my_chat_ID, f'Всё исправно Босс!\nНача
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
     # Если пользователь прошел проверку, то работаем с ним. Напишем приветственное сообщение
-    hn.start_handler(message, bot, keyboard=schedule_keyboard())
+    if not ch.init_user_verif_func(message):
+        print('НЕТ')
+        hn.start_handler(message, bot, keyboard=schedule_keyboard())
+    else:
+        hn.sending_message(message, bot, 'Укажите вашу группу', keyboard=schedule_keyboard())
 
 
 # Обработчик сообщений
@@ -90,7 +88,7 @@ def function_ya(message):
             hn.group_handler(message, bot, keyboard=basic_keyboard())
         elif message.text in sets.days:
             # запоминаем дату
-            hn.day_handler(message, bot, DATA_FILE_PATH, keyboard=basic_keyboard())
+            hn.day_handler(message, bot)
             hn.get_schedule_handler(message, bot, DATA_FILE_PATH,
                                     keyboard=basic_keyboard())
 
