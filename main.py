@@ -12,6 +12,7 @@ import new_sets as ns
 
 import funcs as fn
 import handlers as hn
+import check as ch
 import key as k
 
 """Важные переменные"""
@@ -42,7 +43,6 @@ def schedule_keyboard():
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     for x, y, z in fn.grouped(sets.areas, 3):
         markup.add(x, y, z)
-    markup.add(sets.menu)
     return markup
 
 
@@ -56,10 +56,10 @@ def schedule_keyboard():
 def basic_keyboard():
     """Функция создающая клавиатуру расписания для выбора даты """
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-    markup.add(sets.back)
+    markup.add(sets.calls)
     markup.add(sets.mon, sets.tue, sets.wed)
     markup.add(sets.thu, sets.fri, sets.sat)
-    markup.add(sets.menu)
+    markup.add(sets.Ya)
     return markup
 
 
@@ -78,13 +78,17 @@ def send_welcome(message):
 @bot.message_handler(content_types=['text'])
 def function_ya(message):
     # Прописать try для защиты от ошибок
-    if not hn.init_user_verif_func(message):
+    if not ch.init_user_verif_func(message):
         print('НЕТ')
         hn.start_handler(message, bot, keyboard=schedule_keyboard())
     else:
-        if message.text in sets.areas:
+        if message.text in sets.areas and not ch.check_user_group(message):
             # запоминаем группу и говорим что запомнили
             hn.group_handler(message, bot, keyboard=basic_keyboard())
+        elif message.text in sets.days and ch.check_user_group(message):
+            hn.day_handler(message, bot, DATA_FILE_PATH, keyboard=basic_keyboard())
+        else:
+            hn.sending_message(message, bot, 'fe', keyboard=basic_keyboard())
 
 
 bot.infinity_polling()

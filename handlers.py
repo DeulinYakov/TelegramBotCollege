@@ -1,8 +1,14 @@
+# /////////////////////////////////////////////////////////////////////////////////////////////////////
+#                                    МОДУЛЬ ОСНОВНЫХ ФУНКЦИЙ
+# /////////////////////////////////////////////////////////////////////////////////////////////////////
+
 # Импорт работы с фото
 from telebot.types import InputMediaPhoto
 
 # Подключаем MySQLite
 import sqlite3
+
+import sets
 
 """База данных"""
 # Подключение к базе данных 'dbase.db', если её нет она создастся автоматически
@@ -22,15 +28,6 @@ print("Подключен к SQLite")
 
 edge = 'BT'
 edgeNum = 51.0
-
-
-def init_user_verif_func(message):
-    """Функция первоначально проверяет есть ли пользователь в базе(знаем ли мы его)"""
-    info_user_to = cur.execute("SELECT * FROM users WHERE id = " + str(message.chat.id)).fetchall()
-    if len(info_user_to) > 0:
-        return True
-    else:
-        return False
 
 
 def start_handler(message, bot, keyboard):
@@ -61,3 +58,15 @@ def group_handler(message, bot, keyboard):
     msg = bot.send_message(message.chat.id,
                            'Выберите день недели',
                            reply_markup=keyboard)
+
+
+def day_handler(message, bot, file_path, keyboard):
+    """Обработчки дней недели"""
+    # закинем инфу о группе в базу
+    cur.execute('UPDATE users SET  day = ? WHERE id = ?', (message.text, message.chat.id))
+    conn.commit()
+    # Проверяем день недели, если понедельник показываем больше строк
+    if message.text == sets.mon:
+        pass
+    else:
+        pass
