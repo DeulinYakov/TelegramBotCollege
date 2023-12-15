@@ -15,6 +15,9 @@ import handlers as hn
 import check as ch
 import key as k
 
+# Временно
+import tests
+
 """Важные переменные"""
 # Мой чат айди
 my_chat_ID = 722555232
@@ -85,8 +88,12 @@ def function_ya(message):
         if message.text in sets.areas and not ch.check_user_group(message):
             # запоминаем группу и говорим что запомнили
             hn.group_handler(message, bot, keyboard=basic_keyboard())
-        elif message.text in sets.days and ch.check_user_group(message):
+        elif message.text in sets.days:
+            # запоминаем дату
             hn.day_handler(message, bot, DATA_FILE_PATH, keyboard=basic_keyboard())
+            hn.get_schedule_handler(message, bot, DATA_FILE_PATH,
+                                    keyboard=basic_keyboard())
+
         else:
             hn.sending_message(message, bot, 'fe', keyboard=basic_keyboard())
 
