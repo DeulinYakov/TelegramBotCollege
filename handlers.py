@@ -108,6 +108,7 @@ def get_schedule_handler(message, bot, file_path, keyboard):
         # вернем отфильтрованный датафрейм
 
         return ds.get(columns_names).loc[edgeCon:edgeNum]
+
     # Найдём дату и группу
     cur.execute("SELECT droup, day FROM users WHERE id = ?", (message.chat.id,))
     user_data = cur.fetchone()
@@ -137,3 +138,25 @@ def get_schedule_handler(message, bot, file_path, keyboard):
     msg = bot.send_message(message.chat.id, f'{s} \nСпасибо за терпение!\nУдачного дня😊', reply_markup=keyboard)
     # Удаляю переменную дня
     del s
+
+
+def calls_handler(message, bot, Mcalls, Bcalls, Scalls, keyboard1):
+    """Функция выдающая расписание звонков"""
+    msg = bot.send_message(message.chat.id, 'Вспоминаю расписание звонков, это может занять несколько секунд🤔',
+                           reply_markup=keyboard1)
+    bot.delete_message(message.chat.id, msg.id)
+
+    pic1 = open(Mcalls, "rb")
+    pic2 = open(Bcalls, "rb")
+    pic3 = open(Scalls, "rb")
+    media = [InputMediaPhoto(pic1), InputMediaPhoto(pic2), InputMediaPhoto(pic3)]
+    to_pin = bot.send_media_group(message.chat.id, media)
+    msg = bot.send_message(message.chat.id, f'Пожалуйста! Закрепил для вашего удобства\nУдачного дня😊',
+                           reply_markup=keyboard1)
+    bot.pin_chat_message(chat_id=message.chat.id, message_id=to_pin[0].message_id)
+
+
+def number_requests(message, bot):
+    """Функция подсчёта обращений"""
+
+
