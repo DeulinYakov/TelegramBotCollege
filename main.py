@@ -17,8 +17,7 @@ import key as k
 """Важные переменные"""
 # Мой чат айди
 my_chat_ID = 722555232
-# Типо он ассинхроный
-MEMORY = {}
+
 # Фаил расписания формата html
 DATA_FILE_PATH = 'Лист1.html'
 # Фаил звонков понедельник
@@ -47,14 +46,14 @@ def schedule_keyboard():
     return markup
 
 
-def send_message_to_user(message, text, keyboard=None):
+'''def send_message_to_user(message, text, keyboard=None):
     """Эта функцию отправит пользователю сообщение"""
     # Отправим сообщение пользователю и добавим нужную клавиатуру
-    msg = bot.send_message(message.chat.id, text, reply_markup=keyboard)
+    msg = bot.send_message(message.chat.id, text, reply_markup=keyboard)'''
 
 
 # Переделать
-def data_keyboard():
+def basic_keyboard():
     """Функция создающая клавиатуру расписания для выбора даты """
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     markup.add(sets.back)
@@ -65,26 +64,27 @@ def data_keyboard():
 
 
 # Отправляю себе сообщение при каждом запуске
-msg = bot.send_message(my_chat_ID, f'Ас-саляму алейкум Босс!\nНачал работу')
+msg = bot.send_message(my_chat_ID, f'Всё исправно Босс!\nНачал работу')
 
 
 # Обработчик команд
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
     # Если пользователь прошел проверку, то работаем с ним. Напишем приветственное сообщение
-    hn.start_handler(message, MEMORY, bot, keyboard=add_startup_keyboard())
+    hn.start_handler(message, bot, keyboard=schedule_keyboard())
 
 
 # Обработчик сообщений
 @bot.message_handler(content_types=['text'])
 def function_ya(message):
     # Прописать try для защиты от ошибок
-    if hn.init_user_verif_func(message):
-        print(message.text)
-    else:
+    if not hn.init_user_verif_func(message):
         print('НЕТ')
-
-
+        hn.start_handler(message, bot, keyboard=schedule_keyboard())
+    else:
+        if message.text in sets.areas:
+            # запоминаем группу и говорим что запомнили
+            hn.group_handler(message, bot, keyboard=basic_keyboard())
 
 
 bot.infinity_polling()

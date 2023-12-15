@@ -33,10 +33,31 @@ def init_user_verif_func(message):
         return False
 
 
-''' count = cur.execute("""INSERT INTO users
+def start_handler(message, bot, keyboard):
+    """Функция добавляет юзера в базу и предлагает выбрать группу"""
+    cur.execute("""INSERT INTO users
                           (id, nickname, droup, day, nofr)
                           VALUES
                           (?, ?, '', '', 0);""", (message.chat.id, message.from_user.username))
-        conn.commit()
-        conn.close()'''
-# написать start_handler
+    conn.commit()
+    # отправим пользователю следующее сообщение
+    msg = bot.send_message(message.chat.id,
+                           'Я новый крутой привет Выберите интересующее направление',
+                           reply_markup=keyboard)
+
+
+def sending_message(message, bot, text, keyboard):
+    """Эта функцию отправит пользователю сообщение"""
+    # Отправим сообщение пользователю и добавим нужную клавиатуру
+    msg = bot.send_message(message.chat.id, text, reply_markup=keyboard)
+
+
+def group_handler(message, bot, keyboard):
+    """Обработчки групп"""
+    # закинем инфу о группе в базу
+    cur.execute('UPDATE users SET  droup = ? WHERE id = ?', (message.text, message.chat.id))
+    conn.commit()
+    # отправим пользователю следующее сообщение
+    msg = bot.send_message(message.chat.id,
+                           'Выберите день недели',
+                           reply_markup=keyboard)
