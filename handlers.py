@@ -156,7 +156,11 @@ def calls_handler(message, bot, Mcalls, Bcalls, Scalls, keyboard1):
     bot.pin_chat_message(chat_id=message.chat.id, message_id=to_pin[0].message_id)
 
 
-def number_requests(message, bot):
+def number_requests(message):
     """Функция подсчёта обращений"""
-
-
+    # Берём nofr
+    cur.execute("SELECT nofr FROM users WHERE id = ?", (message.chat.id,))
+    nofr = cur.fetchone()
+    nofr = nofr[0]
+    cur.execute("UPDATE users SET nofr = ? WHERE id = ?", (nofr + 1, message.chat.id))
+    conn.commit()

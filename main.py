@@ -98,12 +98,14 @@ def function_ya(message):
             hn.day_handler(message, bot)
             hn.get_schedule_handler(message, bot, DATA_FILE_PATH,
                                     keyboard=basic_keyboard())
+            hn.number_requests(message)
         elif message.text in sets.Ya:
             # обработчик замены группы
             hn.sending_message(message, bot, 'Укажите новую группу', keyboard=schedule_keyboard())
         elif message.text in sets.calls:
             # обработчик второстепенной функции звонков
             hn.calls_handler(message, bot, Mcalls, Bcalls, Scalls, keyboard1=basic_keyboard())
+            hn.number_requests(message)
         else:
             hn.sending_message(message, bot, 'fe', keyboard=basic_keyboard())
 
