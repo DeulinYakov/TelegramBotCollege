@@ -31,10 +31,6 @@ Scalls = './images/Суббота.jpg'
 bot = telebot.TeleBot(k.TEST_TOKEN)
 
 
-def add_startup_keyboard():
-    """Функция создающая начальную клавиатуру для регистрации пользователя в системе"""
-
-
 def schedule_keyboard():
     """Функция создающая клавиатуру расписания для выбора направления"""
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
@@ -43,13 +39,6 @@ def schedule_keyboard():
     return markup
 
 
-'''def send_message_to_user(message, text, keyboard=None):
-    """Эта функцию отправит пользователю сообщение"""
-    # Отправим сообщение пользователю и добавим нужную клавиатуру
-    msg = bot.send_message(message.chat.id, text, reply_markup=keyboard)'''
-
-
-# Переделать
 def basic_keyboard():
     """Функция создающая клавиатуру расписания для выбора даты """
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
@@ -76,7 +65,6 @@ msg = bot.send_message(my_chat_ID, f'Всё исправно Босс!\nНача
 def send_welcome(message):
     # Если пользователь прошел проверку, то работаем с ним. Напишем приветственное сообщение
     if not ch.init_user_verif_func(message):
-        print('НЕТ')
         hn.start_handler(message, bot, keyboard=schedule_keyboard())
     else:
         hn.sending_message(message, bot, 'Укажите вашу группу', keyboard=schedule_keyboard())
@@ -96,18 +84,20 @@ def function_ya(message):
         elif message.text in sets.days:
             # обработчик дня и обработчик выдачи результата
             hn.day_handler(message, bot)
-            hn.get_schedule_handler(message, bot, DATA_FILE_PATH,
-                                    keyboard=basic_keyboard())
+            hn.get_schedule_handler(message, bot, DATA_FILE_PATH)
             hn.number_requests(message)
+            hn.sending_message(message, bot, 'Выберите день или раздел, который вас интересует.😉', keyboard=basic_keyboard())
+
         elif message.text in sets.Ya:
             # обработчик замены группы
-            hn.sending_message(message, bot, 'Укажите новую группу', keyboard=schedule_keyboard())
+            hn.sending_message(message, bot, 'Ожидаю указание новой группы🤔', keyboard=schedule_keyboard())
         elif message.text in sets.calls:
             # обработчик второстепенной функции звонков
             hn.calls_handler(message, bot, Mcalls, Bcalls, Scalls, keyboard1=basic_keyboard())
             hn.number_requests(message)
+            hn.sending_message(message, bot, 'Выберите день или раздел, который вас интересует.😉', keyboard=basic_keyboard())
         else:
-            hn.sending_message(message, bot, 'fe', keyboard=basic_keyboard())
+            hn.sending_message(message, bot, 'Выберите день или раздел, который вас интересует.😉', keyboard=basic_keyboard())
 
 
 '''# Обработчик кнопок
