@@ -46,13 +46,7 @@ def basic_keyboard():
     markup.add(sets.mon, sets.tue, sets.wed)
     markup.add(sets.thu, sets.fri, sets.sat)
     markup.add(sets.Ya)
-    return markup
-
-
-def fasten_keyboard():
-    """Функция создающая клавиатуру расписания для выбора даты """
-    markup = types.InlineKeyboardMarkup()
-    markup.add(types.InlineKeyboardButton(text=sets.fix, callback_data='fix'))
+    markup.add(sets.fix)
     return markup
 
 
@@ -74,30 +68,41 @@ def send_welcome(message):
 @bot.message_handler(content_types=['text'])
 def function_ya(message):
     # Прописать try для защиты от ошибок
-    if not ch.init_user_verif_func(message):
-        # Обработчик новых юзеров
-        hn.start_handler(message, bot, keyboard=schedule_keyboard())
-    else:
-        if message.text in sets.areas:
-            # обработчик групп
-            hn.group_handler(message, bot, keyboard=basic_keyboard())
-        elif message.text in sets.days:
-            # обработчик дня и обработчик выдачи результата
-            hn.day_handler(message, bot)
-            hn.get_schedule_handler(message, bot, DATA_FILE_PATH)
-            hn.number_requests(message)
-            hn.sending_message(message, bot, 'Выберите день или раздел, который вас интересует.😉', keyboard=basic_keyboard())
-
-        elif message.text in sets.Ya:
-            # обработчик замены группы
-            hn.sending_message(message, bot, 'Ожидаю указание новой группы🤔', keyboard=schedule_keyboard())
-        elif message.text in sets.calls:
-            # обработчик второстепенной функции звонков
-            hn.calls_handler(message, bot, Mcalls, Bcalls, Scalls, keyboard1=basic_keyboard())
-            hn.number_requests(message)
-            hn.sending_message(message, bot, 'Выберите день или раздел, который вас интересует.😉', keyboard=basic_keyboard())
+    try:
+        if not ch.init_user_verif_func(message):
+            # Обработчик новых юзеров
+            hn.start_handler(message, bot, keyboard=schedule_keyboard())
         else:
-            hn.sending_message(message, bot, 'Выберите день или раздел, который вас интересует.😉', keyboard=basic_keyboard())
+            if message.text in sets.areas:
+                # обработчик групп
+                hn.group_handler(message, bot, keyboard=basic_keyboard())
+            elif message.text in sets.days:
+                # обработчик дня и обработчик выдачи результата
+                hn.day_handler(message, bot)
+                hn.get_schedule_handler(message, bot, DATA_FILE_PATH)
+                hn.number_requests(message)
+                hn.sending_message(message, bot, 'Выберите день или раздел, который вас интересует.😉',
+                                   keyboard=basic_keyboard())
+
+            elif message.text in sets.Ya:
+                # обработчик замены группы
+                hn.sending_message(message, bot, 'Ожидаю указание новой группы🤔', keyboard=schedule_keyboard())
+            elif message.text in sets.calls:
+                # обработчик второстепенной функции звонков
+                hn.calls_handler(message, bot, Mcalls, Bcalls, Scalls, keyboard1=basic_keyboard())
+                hn.number_requests(message)
+                hn.sending_message(message, bot, 'Выберите день или раздел, который вас интересует.😉',
+                                   keyboard=basic_keyboard())
+            elif message.text in sets.fix:
+                # временная функция
+                hn.fix_handler(message, bot, keyboard=basic_keyboard())
+            else:
+                hn.sending_message(message, bot, 'Выберите день или раздел, который вас интересует.😉',
+                                   keyboard=basic_keyboard())
+    except:
+        hn.sending_message(message, bot, f'Упс😓... Что-то пошло не так, давайте попробуем заново',
+                           keyboard=basic_keyboard())
+
 
 
 '''# Обработчик кнопок
