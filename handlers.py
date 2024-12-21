@@ -12,7 +12,7 @@ import sets
 
 """База данных"""
 # Подключение к базе данных 'dbase.db', если её нет она создастся автоматически
-conn = sqlite3.connect('base.db', check_same_thread=False)
+conn = sqlite3.connect('basetest.db', check_same_thread=False)
 # Создаём курсор
 cur = conn.cursor()
 print("Подключен к SQLite")
@@ -26,8 +26,8 @@ print("Подключен к SQLite")
 # cur.close()
 # print('////base close////')
 
-edge = 'BP'
-edgeNum = 50.0
+edge = 'BX'
+edgeNum = 51.0
 
 
 def start_handler(message, bot, keyboard):
@@ -145,7 +145,7 @@ def get_schedule_handler(message, bot, file_path):
     del s
 
 
-def calls_handler(message, bot, Mcalls, Bcalls, Scalls, keyboard1):
+def calls_handler(message, bot, Mcalls, Bcalls, keyboard1):
     """Функция выдающая расписание звонков"""
     msg = bot.send_message(message.chat.id, 'Вспоминаю расписание звонков, это может занять несколько секунд🤔',
                            reply_markup=keyboard1)
@@ -153,8 +153,7 @@ def calls_handler(message, bot, Mcalls, Bcalls, Scalls, keyboard1):
 
     pic1 = open(Mcalls, "rb")
     pic2 = open(Bcalls, "rb")
-    pic3 = open(Scalls, "rb")
-    media = [InputMediaPhoto(pic1), InputMediaPhoto(pic2), InputMediaPhoto(pic3)]
+    media = [InputMediaPhoto(pic1), InputMediaPhoto(pic2)]
     to_pin = bot.send_media_group(message.chat.id, media)
     msg = bot.send_message(message.chat.id, f'Пожалуйста! Закрепил для вашего удобства\nУдачного дня😊',
                            reply_markup=keyboard1)
@@ -175,3 +174,4 @@ def fix_handler(message, bot, keyboard):
     """Функция для отправки сообщений"""
     msg = bot.send_message(message.chat.id, f'Появилась ошибка или предложение?\nСделайте меня лучше, опишите её, моему'
                                             f' создателю @arduinoespruino', reply_markup=keyboard)
+
